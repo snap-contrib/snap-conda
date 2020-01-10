@@ -1,0 +1,25 @@
+package:
+  name: snap
+  version: 7.0.0
+  
+source:
+  fn:  esa-snap_all_unix_7_0.sh                                                [unix]
+  url: http://step.esa.int/downloads/7.0/installers/esa-snap_all_unix_7_0.sh   [unix]
+  md5: a12a65ea62adeb25574865ba3fb35d02                                        [unix]
+
+build:
+  number: 12
+
+requirements:
+  host:
+    - python
+    - jpy
+    
+  run:
+    - python
+    - jpy
+
+about:
+  home: https://step.esa.int
+  license: Apache License 2.0
+  summary: Terradue packaging of the Sentinel Application Platform (SNAP)
