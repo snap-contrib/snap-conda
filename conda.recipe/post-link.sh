@@ -84,3 +84,20 @@ echo "Java binary: $JAVA_PATH" &>> $PREFIX/.messages.txt
 alternatives --install /usr/bin/java java $JAVA_PATH 1 &>> $PREFIX/.messages.txt
 # choose the java version you just installed 
 alternatives --set java $JAVA_PATH &>> $PREFIX/.messages.txt
+
+
+
+# adding snap binaries to  PATH
+ACTIVATE_DIR=$PREFIX/etc/conda/activate.d
+DEACTIVATE_DIR=$PREFIX/etc/conda/deactivate.d
+
+mkdir -p $ACTIVATE_DIR
+mkdir -p $DEACTIVATE_DIR
+
+echo "#!/bin/bash 
+export PATH=$PREFIX/snap/bin:\$PATH" >> $ACTIVATE_DIR/env_vars.sh
+
+echo "#!/bin/bash
+PATH=\$(echo \$PATH | sed -e 's@$PREFIX/snap/bin:@@g')
+export PATH=\$PATH"  >>  $DEACTIVATE_DIR/env_vars.sh
+
