@@ -12,29 +12,35 @@ echo "updating snap modules" &>> $PREFIX/.messages.txt
 $PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
 
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
-echo "Giving permissions to nobody user" &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
 
 echo "setting python_version variable" &>> $PREFIX/.messages.txt
 python_version=$( $PREFIX/bin/python -c 'import sys; print("{}.{}".format(sys.version_info[0], sys.version_info[1]))' )
 echo "python_version is $python_version " &>> $PREFIX/.messages.txt
 
+# retrieving jpy wheel to copy in $SNAP_HOME/snap-python/snappy directory
 jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*m-linux_x86_64.whl")
 jpy_filename=$(basename $jpy_file)
 
-if test -f "$jpy_file"; then
-    echo "$jpy_file exists" &>> $PREFIX/.messages.txt
+# check if $SNAP_HOME/snap-python/snappy directory exists, if not create it
+if [ -d "$SNAP_HOME/snap-python/snappy" ]
+then
+	echo "$SNAP_HOME/snap-python/snappy directory exists"  &>> $PREFIX/.messages.txt
+else
+	echo "creating $SNAP_HOME/snap-python/snappy directory"  &>> $PREFIX/.messages.txt
+	mkdir -p $SNAP_HOME/snap-python/snappy &>> $PREFIX/.messages.txt
 fi
 
-if [ -d "$SNAP_HOME/snap-python/snappy" ]; then
-    echo "$SNAP_HOME/snap-python/snappy directory exists"  &>> $PREFIX/.messages.txt
-fi
-
+# copying jpy wheel to snappy folder
 echo "Copying $jpy_file to $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $PREFIX/.messages.txt
 echo "running: cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $PREFIX/.messages.txt
 cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename &>> $PREFIX/.messages.txt
-$PREFIX/snap/bin/snappy-conf $PREFIX/bin/python &>> $PREFIX/.messages.txt
+
+# copying snappy folder to site-packakes to make it importable
 cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
+
+echo "running snappy-conf: $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python" &>> $PREFIX/.messages.txt
+$PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version &>> $PREFIX/.messages.txt
 
 echo "Setting execution permissions to gdal.jar" &>> $PREFIX/.messages.txt
 chmod +x $SNAP_HOME/auxdata/gdal/gdal-2.2.0-linux/share/java/gdal.jar &>> $PREFIX/.messages.txt
@@ -47,7 +53,6 @@ chmod +x $SNAP_HOME/auxdata/gdal/gdal-2.2.0-linux/share/java/gdal.jar &>> $PREFI
 #alternatives --install /usr/bin/java java $JAVA_PATH 1 &>> $PREFIX/.messages.txt
 ## choose the java version you just installed 
 #alternatives --set java $JAVA_PATH &>> $PREFIX/.messages.txt
-
 
 
 # adding snap binaries to  PATH

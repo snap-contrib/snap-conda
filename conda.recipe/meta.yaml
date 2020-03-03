@@ -8,18 +8,22 @@ source:
   md5: a12a65ea62adeb25574865ba3fb35d02                                        [unix]
 
 build:
-  number: 18
+  number: 20
 
 requirements:
   host:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
     
   run:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
+
+  tests:
+    imports:
+      - snappy
 
 about:
   home: https://step.esa.int
