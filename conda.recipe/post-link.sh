@@ -20,6 +20,12 @@ echo "python_version is $python_version " &>> $PREFIX/.messages.txt
 
 # retrieving jpy wheel to copy in $SNAP_HOME/snap-python/snappy directory
 jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*m-linux_x86_64.whl")
+if [ -z "$jpy_file" ]
+then
+	echo "Jpy has not been installed correctly" &>> $PREFIX/.messages.txt
+	exit 1
+fi
+
 jpy_filename=$(basename $jpy_file)
 
 # check if $SNAP_HOME/snap-python/snappy directory exists, if not create it
@@ -36,11 +42,11 @@ echo "Copying $jpy_file to $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $PRE
 echo "running: cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $PREFIX/.messages.txt
 cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename &>> $PREFIX/.messages.txt
 
-# copying snappy folder to site-packakes to make it importable
-cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
-
 echo "running snappy-conf: $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python" &>> $PREFIX/.messages.txt
 $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version &>> $PREFIX/.messages.txt
+
+echo " copying snappy folder to site-packages to make it importable: cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages"
+cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
 
 echo "Setting execution permissions to gdal.jar" &>> $PREFIX/.messages.txt
 chmod +x $SNAP_HOME/auxdata/gdal/gdal-2.2.0-linux/share/java/gdal.jar &>> $PREFIX/.messages.txt
