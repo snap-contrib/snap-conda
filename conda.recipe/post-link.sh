@@ -8,8 +8,14 @@ echo "SNAP_HOME is $SNAP_HOME" &>> $PREFIX/.messages.txt
 echo "updating snap.userdir in  $PREFIX/snap/etc/snap.properties " &>> $PREFIX/.messages.txt
 sed -i "s!#snap.userdir=!snap.userdir=$SNAP_HOME!g" $PREFIX/snap/etc/snap.properties &>> $PREFIX/.messages.txt
 
+echo "updating default_userdir in $PREFIX/snap/etc/snap.conf " &>> $PREFIX/.messages.txt
+sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.messages.txt
+
 echo "updating snap modules" &>> $PREFIX/.messages.txt
 $PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
+
+#echo "installing IDEPIX OLCI snap module" &>> $PREFIX/.messages.txt
+#$PREFIX/snap/bin/snap --nosplash --nogui --modules --install org.esa.snap.idepix.olci  2>> $PREFIX/.messages.txt
 
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
