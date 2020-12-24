@@ -27,7 +27,7 @@ pipeline {
     stage('conda build') {
         steps {
             sh '''#!/usr/bin/env bash
-            conda build .
+            $WORKSPACE/conda/bin/conda build .
             '''
         }
     }
