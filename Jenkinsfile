@@ -5,6 +5,9 @@ environment {
 pipeline {
     agent any
     stages {
+    stage('clean workspace) {
+        cleanWs()
+    }
     stage('setup miniconda') {
         steps {
             sh '''#!/usr/bin/env bash
