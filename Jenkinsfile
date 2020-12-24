@@ -24,14 +24,14 @@ pipeline {
         }
         stage('Push') {            
             steps { 
-                withCredentials([string(credentialsId: 'terradue-conda', variable: 'CONDA_UPLOAD_TOKEN')])
+                withCredentials([string(credentialsId: 'terradue-conda', variable: 'CONDA_UPLOAD_TOKEN')]) {
                 sh '''#!/usr/bin/env bash
                 set -x
                 export PACKAGENAME=snap
                 export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN
                 echo $CONDA_UPLOAD_TOKEN
                 anaconda upload --user Terradue /srv/conda/envs/env_conda/conda-bld/*/$PACKAGENAME-*.tar.bz2
-                '''
+                '''}
             }
         }
     }
