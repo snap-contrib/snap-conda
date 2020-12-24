@@ -21,6 +21,7 @@ pipeline {
             export PATH=$WORKSPACE/conda/bin:$PATH
             $WORKSPACE/conda/bin/conda update --yes conda  # Update CONDA without command line prompt
             source $WORKSPACE/conda/etc/profile.d/conda.sh
+            $WORKSPACE/conda/bin/conda install conda-build
             '''
         }
     }
