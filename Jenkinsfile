@@ -2,7 +2,9 @@ environment {
     PATH = "$WORKSPACE/miniconda/bin:$PATH"
   }
 
-  stages {
+pipeline {
+    agent any
+    stages {
     stage('setup miniconda') {
         steps {
             sh '''#!/usr/bin/env bash
@@ -24,4 +26,5 @@ environment {
         }
     }
   }
-  
+}
+
