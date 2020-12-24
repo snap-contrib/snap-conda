@@ -1,6 +1,10 @@
-chmod 755 $PREFIX/snap-src/esa-snap_all_unix_7_0.sh
+SNAP_PKG='esa-snap_sentinel_unix_8_0.sh'
 
-$PREFIX/snap-src/esa-snap_all_unix_7_0.sh -q -dir $PREFIX/snap &>> $PREFIX/.messages.txt
+chmod 755 $PREFIX/snap-src/$SNAP_PKG
+
+$PREFIX/$SNAP_PKG -q -dir $PREFIX/snap &>> $PREFIX/.messages.txt
+
+rm -fr $PREFIX/$SNAP_PKG
 
 SNAP_HOME="$PREFIX/snap/.snap"
 
@@ -13,9 +17,6 @@ sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.mess
 
 echo "updating snap modules" &>> $PREFIX/.messages.txt
 $PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
-
-#echo "installing IDEPIX OLCI snap module" &>> $PREFIX/.messages.txt
-#$PREFIX/snap/bin/snap --nosplash --nogui --modules --install org.esa.snap.idepix.olci  2>> $PREFIX/.messages.txt
 
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
