@@ -16,7 +16,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''#!/usr/bin/env bash
-                set -x
                 mkdir -p /home/jovyan/conda-bld/work
                 cd $WORKSPACE
                 mamba build .
@@ -26,6 +25,7 @@ pipeline {
         stage('Push') {
             steps {
                 sh '''#!/usr/bin/env bash
+                set -x
                 export PACKAGENAME=snap
                 export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN
                 echo $CONDA_UPLOAD_TOKEN
