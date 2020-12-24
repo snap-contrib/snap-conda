@@ -17,7 +17,7 @@ pipeline {
                 sh '''#!/usr/bin/env bash
                 set -x
                 cd $WORKSPACE
-                conda build .'''
+                mamba build .'''
             }
         }
     }
