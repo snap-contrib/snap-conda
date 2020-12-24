@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh '''#!/usr/bin/env bash
                 set -x
+                mkdir -p /home/jovyan/conda-bld/work
                 cd $WORKSPACE
                 mamba build .'''
             }
