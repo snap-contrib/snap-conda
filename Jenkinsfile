@@ -15,6 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''#!/usr/bin/env bash
+                set -x
                 cd $WORKSPACE
                 conda build .'''
             }
