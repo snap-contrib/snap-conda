@@ -6,7 +6,9 @@ pipeline {
     agent any
     stages {
     stage('clean workspace) {
+        steps{
         cleanWs()
+        }
     }
     stage('setup miniconda') {
         steps {
