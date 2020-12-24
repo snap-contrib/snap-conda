@@ -13,6 +13,7 @@ pipeline {
     stage('setup miniconda') {
         steps {
             sh '''#!/usr/bin/env bash
+            set -x
             export MINIFORGE_VERSION=4.8.2-1
             wget --quiet https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh -O /tmp/miniforge-installer.sh
             chmod +x /tmp/miniforge-installer.sh
