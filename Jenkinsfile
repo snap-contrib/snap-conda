@@ -18,7 +18,17 @@ pipeline {
                 set -x
                 mkdir -p /home/jovyan/conda-bld/work
                 cd $WORKSPACE
-                mamba build .'''
+                mamba build .
+                '''
+            }
+        }
+        stage('Push') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                export PACKAGENAME=snap
+                export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN
+                anaconda upload --user eoepca bld-dir/**/$PACKAGENAME-*.tar.bz2
+                '''
             }
         }
     }
