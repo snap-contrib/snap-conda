@@ -22,9 +22,9 @@ pipeline {
                 '''
             }
         }
-        stage('Push') {
-            withCredentials([string(credentialsId: 'terradue-conda', variable: 'CONDA_UPLOAD_TOKEN')])
+        stage('Push') {            
             steps { 
+                withCredentials([string(credentialsId: 'terradue-conda', variable: 'CONDA_UPLOAD_TOKEN')])
                 sh '''#!/usr/bin/env bash
                 set -x
                 export PACKAGENAME=snap
