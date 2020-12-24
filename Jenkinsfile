@@ -14,8 +14,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'cd $WORKSPACE
-                conda build .'
+                sh '''#!/usr/bin/env bash
+                cd $WORKSPACE
+                conda build .'''
             }
         }
     }
