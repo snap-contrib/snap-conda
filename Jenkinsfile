@@ -12,5 +12,11 @@ pipeline {
                 sh 'conda --version'
             }
         }
+        stage('Build') {
+            steps {
+                sh 'conda build .'
+            }
+        }
+    }
     }
 }
