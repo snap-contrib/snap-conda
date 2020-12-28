@@ -32,7 +32,7 @@ pipeline {
                 export PACKAGENAME=snap
                 label=dev
                 if [ "$GIT_BRANCH" = "master" ]; then label=main; fi
-                anaconda upload --no-progress --user Terradue --label $label /srv/conda/envs/env_conda/conda-bld/*/$PACKAGENAME-*.tar.bz2
+                anaconda upload --no-progress --force --user Terradue --label $label /srv/conda/envs/env_conda/conda-bld/*/$PACKAGENAME-*.tar.bz2
                 '''}
             }
         }
