@@ -10,7 +10,18 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'conda --version'
+                sh '''#!/usr/bin/env bash
+                set -x
+                conda build --version
+                conda --version
+                
+                if $GIT_BRANCH == 'develop'
+
+                label=dev
+
+                if [ "$GIT_BRANCH" = "master" ]; then label=main; fi
+                echo $label
+                '''
             }
         }
         stage('Build') {
@@ -24,13 +35,20 @@ pipeline {
         }
         stage('Push') {            
             steps { 
-                withCredentials([string(credentialsId: 'terradue-conda', variable: 'CONDA_UPLOAD_TOKEN')]) {
+                withCredentials([string(credentialsId: 'terradue-conda', variable: 'ANACONDA_API_TOKEN')]) {
                 sh '''#!/usr/bin/env bash
-                set -x
+                
+                set -x 
+
                 export PACKAGENAME=snap
-                export ANACONDA_API_TOKEN=$CONDA_UPLOAD_TOKEN
-                echo $CONDA_UPLOAD_TOKEN
-                anaconda upload --user Terradue /srv/conda/envs/env_conda/conda-bld/*/$PACKAGENAME-*.tar.bz2
+                
+                if $GIT_BRANCH == 'develop'
+
+                label=dev
+
+                if [ "$GIT_BRANCH" = "master" ]; then label=main; fi
+
+                anaconda upload --no-progress --user Terradue --label $label /srv/conda/envs/env_conda/conda-bld/*/$PACKAGENAME-*.tar.bz2
                 '''}
             }
         }
