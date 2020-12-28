@@ -14,13 +14,12 @@ pipeline {
                 set -x
                 conda build --version
                 conda --version
-                
-                if $GIT_BRANCH == 'develop'
 
                 label=dev
 
                 if [ "$GIT_BRANCH" = "master" ]; then label=main; fi
                 echo $label
+                exit 1
                 '''
             }
         }
