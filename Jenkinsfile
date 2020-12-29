@@ -13,6 +13,7 @@ pipeline {
                 sh '''#!/usr/bin/env bash
                 conda build --version
                 conda --version
+                mamba clean -a -y 
                 '''
             }
         }
