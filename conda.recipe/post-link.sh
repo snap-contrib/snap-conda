@@ -26,7 +26,7 @@ python_version=$( $PREFIX/bin/python -c 'import sys; print("{}.{}".format(sys.ve
 echo "python_version is $python_version " &>> $PREFIX/.messages.txt
 
 # retrieving jpy wheel to copy in $SNAP_HOME/snap-python/snappy directory
-jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*m-linux_x86_64.whl")
+jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*-linux_x86_64.whl")
 if [ -z "$jpy_file" ]
 then
 	echo "Jpy has not been installed correctly" &>> $PREFIX/.messages.txt
