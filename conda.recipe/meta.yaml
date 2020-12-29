@@ -13,12 +13,12 @@ build:
 requirements:
   host:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
     
   run:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
 
 about:
