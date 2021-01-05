@@ -1,6 +1,6 @@
 # SNAP as a conda package
 
-[![Project Status: Abandoned – Initial development has started, but there has not yet been a stable, usable release; the project has been abandoned and the author(s) do not intend on continuing development.](https://www.repostatus.org/badges/latest/abandoned.svg)](https://www.repostatus.org/#abandoned)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
 A package manager is a tool that automates the process of installing, updating, and removing packages. Conda, with its "conda install", "conda update", and "conda remove" sub-commands, falls squarely under this definition. 
 
