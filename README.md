@@ -1,5 +1,7 @@
 # SNAP as a conda package
 
+[![Project Status: Abandoned – Initial development has started, but there has not yet been a stable, usable release; the project has been abandoned and the author(s) do not intend on continuing development.](https://www.repostatus.org/badges/latest/abandoned.svg)](https://www.repostatus.org/#abandoned)
+
 A package manager is a tool that automates the process of installing, updating, and removing packages. Conda, with its "conda install", "conda update", and "conda remove" sub-commands, falls squarely under this definition. 
 
 Conda is a general-purpose package management system, designed to build and manage software of any type from any language. As such, it also works well with Python packages.
