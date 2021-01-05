@@ -1,24 +1,24 @@
 package:
   name: snap
-  version: 7.0.0
+  version: 8.0.0
   
 source:
-  fn:  esa-snap_all_unix_7_0.sh                                                [unix]
-  url: http://step.esa.int/downloads/7.0/installers/esa-snap_all_unix_7_0.sh   [unix]
-  md5: a12a65ea62adeb25574865ba3fb35d02                                        [unix]
+  fn:  esa-snap_sentinel_unix_8_0.sh                                                    [unix]
+  url: https://download.esa.int/step/snap/8.0/installers/esa-snap_sentinel_unix_8_0.sh  [unix]
+  md5: dcc44c6e305c6f299d4955a699461243                                                 [unix]
 
 build:
-  number: 22
+  number: 2
 
 requirements:
   host:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
     
   run:
     - python
-    - jpy
+    - jpy=0.9.0
     - java-1.7.0-openjdk-cos6-x86_64=1.7.0.131
 
 about:

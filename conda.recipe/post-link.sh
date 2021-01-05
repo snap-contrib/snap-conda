@@ -1,6 +1,10 @@
-chmod 755 $PREFIX/snap-src/esa-snap_all_unix_7_0.sh
+SNAP_PKG='esa-snap_sentinel_unix_8_0.sh'
 
-$PREFIX/snap-src/esa-snap_all_unix_7_0.sh -q -dir $PREFIX/snap &>> $PREFIX/.messages.txt
+chmod 755 $PREFIX/snap-src/$SNAP_PKG
+
+$PREFIX/snap-src/$SNAP_PKG -q -dir $PREFIX/snap &>> $PREFIX/.messages.txt
+
+rm -fr $PREFIX/snap-src/$SNAP_PKG
 
 SNAP_HOME="$PREFIX/snap/.snap"
 
@@ -14,9 +18,6 @@ sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.mess
 echo "updating snap modules" &>> $PREFIX/.messages.txt
 $PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
 
-#echo "installing IDEPIX OLCI snap module" &>> $PREFIX/.messages.txt
-#$PREFIX/snap/bin/snap --nosplash --nogui --modules --install org.esa.snap.idepix.olci  2>> $PREFIX/.messages.txt
-
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
 
@@ -25,7 +26,7 @@ python_version=$( $PREFIX/bin/python -c 'import sys; print("{}.{}".format(sys.ve
 echo "python_version is $python_version " &>> $PREFIX/.messages.txt
 
 # retrieving jpy wheel to copy in $SNAP_HOME/snap-python/snappy directory
-jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*m-linux_x86_64.whl")
+jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*-linux_x86_64.whl")
 if [ -z "$jpy_file" ]
 then
 	echo "Jpy has not been installed correctly" &>> $PREFIX/.messages.txt
@@ -55,7 +56,7 @@ echo " copying snappy folder to site-packages to make it importable: cp -r $SNAP
 cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
 
 echo "Setting execution permissions to gdal.jar" &>> $PREFIX/.messages.txt
-chmod +x $SNAP_HOME/auxdata/gdal/gdal-2.2.0-linux/share/java/gdal.jar &>> $PREFIX/.messages.txt
+chmod +x $SNAP_HOME/auxdata/gdal/gdal-3-0-0/java/gdal.jar &>> $PREFIX/.messages.txt
 
 ## Jdk from package requirements
 #echo "Setting the default version of java to 1.7" &>> $PREFIX/.messages.txt
