@@ -16,7 +16,7 @@ echo "updating default_userdir in $PREFIX/snap/etc/snap.conf " &>> $PREFIX/.mess
 sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.messages.txt
 
 echo "updating snap modules" &>> $PREFIX/.messages.txt
-$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
+( cmdpid=$BASHPID; (sleep 600; kill $cmdpid) & exec $PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all &>> $PREFIX/.messages.txt )
 
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
@@ -50,7 +50,7 @@ echo "running: cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $
 cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename &>> $PREFIX/.messages.txt
 
 echo "running snappy-conf: $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python" &>> $PREFIX/.messages.txt
-$PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version &>> $PREFIX/.messages.txt
+( cmdpid=$BASHPID; (sleep 30; kill $cmdpid) & exec $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version &>> $PREFIX/.messages.txt )
 
 echo " copying snappy folder to site-packages to make it importable: cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages"
 cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
