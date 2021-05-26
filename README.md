@@ -1,6 +1,6 @@
 # SNAP as a conda package
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 A package manager is a tool that automates the process of installing, updating, and removing packages. Conda, with its "conda install", "conda update", and "conda remove" sub-commands, falls squarely under this definition. 
 
@@ -16,6 +16,25 @@ This goal is achieved by creating conda packages installing SNAP and snappy, pub
 
 ## Building this recipe
 
+This recipe is built with conda (or mamba) with:
+
+```console
+conda build .
+```
+
 ## Installing SNAP as a conda package
+
+To install SNAP as a conda package on Linux, use conda (or mamba): 
+
+```console
+conda install -c terradue -c conda-forge snap=8.0.0
+```
+
+## Limitations
+
+SNAP as a conda package can be installed on Linux. For Mac or Windows, we suggest looking at the proposed startegies:
+
+ - https://github.com/snap-contrib/cwl-snap-graph-runner to use CWL and Docker to process GPT graphs
+ - https://github.com/snap-contrib/vscode-remote-snap to use Visual Studio Code remote containers to develop SNAP and Snappy based Python applications
 
 
