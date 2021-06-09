@@ -17,13 +17,7 @@ sed -i "s!#snap.userdir=!snap.userdir=$SNAP_HOME!g" $PREFIX/snap/etc/snap.proper
 echo "updating default_userdir in $PREFIX/snap/etc/snap.conf " >> ${MESSAGE_FILE} 2>&1  
 sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf >> ${MESSAGE_FILE} 2>&1  
 
-echo "updating snap modules" >> ${MESSAGE_FILE} 2>&1  
-#$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all >> ${MESSAGE_FILE} 2>&1   
 
-$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>&1 | while read -r line; do
-    echo "$line"
-    [ "$line" = "updates=0" ] && sleep 2 && pkill -TERM -f "snap/jre/bin/java"
-done
 
 echo "Give read/write permissions for snap home folder" >> ${MESSAGE_FILE} 2>&1  
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
@@ -89,3 +83,10 @@ echo "#!/bin/bash
 PATH=\$(echo \$PATH | sed -e 's@$PREFIX/snap/bin:@@g')
 export PATH=\$PATH"  >>  $DEACTIVATE_DIR/env_vars.sh
 
+echo "updating snap modules" >> ${MESSAGE_FILE} 2>&1  
+#$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all >> ${MESSAGE_FILE} 2>&1   
+
+$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>&1 | while read -r line; do
+    echo "$line"
+    [ "$line" = "updates=0" ] && sleep 2 && pkill -TERM -f "snap/jre/bin/java"
+done
