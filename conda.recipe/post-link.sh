@@ -10,9 +10,7 @@ SNAP_HOME="$PREFIX/snap/.snap"
 
 echo "SNAP_HOME is $SNAP_HOME" &>> $PREFIX/.messages.txt
 echo "updating snap.userdir in  $PREFIX/snap/etc/snap.properties " &>> $PREFIX/.messages.txt
-#sed -i "s/#snap.userdir=/snap.userdir=$SNAP_HOME/g" $PREFIX/snap/etc/snap.properties &>> $PREFIX/.messages.txt
-
-
+sed -i "s/#snap.userdir=/snap.userdir=$SNAP_HOME/g" $PREFIX/snap/etc/snap.properties &>> $PREFIX/.messages.txt
 
 echo "updating default_userdir in $PREFIX/snap/etc/snap.conf " &>> $PREFIX/.messages.txt
 sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.messages.txt
