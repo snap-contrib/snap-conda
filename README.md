@@ -19,7 +19,7 @@ This goal is achieved by creating conda packages installing SNAP and snappy, pub
 This recipe is built with conda (or mamba) with:
 
 ```console
-conda build .
+conda build -c terradue .
 ```
 
 ## Installing SNAP as a conda package
@@ -35,6 +35,6 @@ conda install -c terradue -c conda-forge snap=8.0.0
 SNAP as a conda package can be installed on Linux. For Mac or Windows, we suggest looking at the proposed startegies:
 
  - https://github.com/snap-contrib/cwl-snap-graph-runner to use CWL and Docker to process GPT graphs
- - https://github.com/snap-contrib/vscode-remote-snap to use Visual Studio Code remote containers to develop SNAP and Snappy based Python applications
+ - https://github.com/snap-contrib/vscode-remote-snap to use Visual Studio Code remote containers to develop SNAP and Snappy based Python applications (Windows 10 PRO or Mac OSX)
 
 
