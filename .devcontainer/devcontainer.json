@@ -1,0 +1,28 @@
+{
+	"name": "scombi2",
+		
+	"build": {
+		"context": "..",
+		"dockerfile": "./Dockerfile"},
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.pythonPath": "/srv/conda/envs/env_scombi_do/bin/python",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.formatting.autopep8Path": "/srv/conda/envs/dev/bin/autopep8",
+		"python.formatting.blackPath": "/srv/conda/envs/dev/bin/black",
+		"python.formatting.yapfPath": "/srv/conda/envs/dev/bin/yapf",
+		"python.linting.banditPath": "/srv/conda/envs/dev/bin/bandit",
+		"python.linting.flake8Path": "/srv/conda/envs/dev/bin/flake8",
+		"python.linting.mypyPath": "/srv/conda/envs/dev/bin/mypy",
+		"python.linting.pycodestylePath": "/srv/conda/envs/dev/bin/pycodestyle",
+		"python.linting.pydocstylePath": "/srv/conda/envs/dev/bin/pydocstyle",
+		"python.linting.pylintPath": "/srv/conda/envs/dev/bin/pylint"},
+	"extensions": [
+		"ms-python.python"
+	],
+	"containerEnv": {
+		"PREFIX": "/srv/conda/envs/env_snap",
+		"SRC_DIR": "/workspaces/snap-conda"
+	},
+}

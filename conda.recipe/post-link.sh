@@ -10,13 +10,20 @@ SNAP_HOME="$PREFIX/snap/.snap"
 
 echo "SNAP_HOME is $SNAP_HOME" &>> $PREFIX/.messages.txt
 echo "updating snap.userdir in  $PREFIX/snap/etc/snap.properties " &>> $PREFIX/.messages.txt
-sed -i "s!#snap.userdir=!snap.userdir=$SNAP_HOME!g" $PREFIX/snap/etc/snap.properties &>> $PREFIX/.messages.txt
+#sed -i "s/#snap.userdir=/snap.userdir=$SNAP_HOME/g" $PREFIX/snap/etc/snap.properties &>> $PREFIX/.messages.txt
+
+
 
 echo "updating default_userdir in $PREFIX/snap/etc/snap.conf " &>> $PREFIX/.messages.txt
 sed -i "s!\${HOME}!$PREFIX/snap/!g" $PREFIX/snap/etc/snap.conf &>> $PREFIX/.messages.txt
 
 echo "updating snap modules" &>> $PREFIX/.messages.txt
-$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>> $PREFIX/.messages.txt
+$PREFIX/snap/bin/snap --nosplash --nogui --modules --update-all 2>&1 | while read -r line; do
+    echo "$line"
+    [ "$line" = "updates=0" ] && sleep 2 && pkill -TERM -f "snap/jre/bin/java"
+done
+
+echo "update concluded" &>> $PREFIX/.messages.txt
 
 echo "Give read/write permissions for snap home folder"  &>> $PREFIX/.messages.txt
 chmod -R 777 $SNAP_HOME &>> $PREFIX/.messages.txt
@@ -26,7 +33,7 @@ python_version=$( $PREFIX/bin/python -c 'import sys; print("{}.{}".format(sys.ve
 echo "python_version is $python_version " &>> $PREFIX/.messages.txt
 
 # retrieving jpy wheel to copy in $SNAP_HOME/snap-python/snappy directory
-jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*m-linux_x86_64.whl")
+jpy_file=$(find ${PREFIX}/jpy_wheel -name "jpy-*-cp*-cp*-linux_x86_64.whl")
 if [ -z "$jpy_file" ]
 then
 	echo "Jpy has not been installed correctly" &>> $PREFIX/.messages.txt
@@ -50,7 +57,12 @@ echo "running: cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename" &>> $
 cp ${jpy_file} $SNAP_HOME/snap-python/snappy/$jpy_filename &>> $PREFIX/.messages.txt
 
 echo "running snappy-conf: $PREFIX/snap/bin/snappy-conf $PREFIX/bin/python" &>> $PREFIX/.messages.txt
-$PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version &>> $PREFIX/.messages.txt
+
+$PREFIX/snap/bin/snappy-conf $PREFIX/bin/python$python_version | while read -r line; do
+    echo "$line"
+    [ "$line" = "or copy the 'snappy' module into your Python's 'site-packages' directory." ] && sleep 2 && pkill -TERM -f "nbexec"
+done
+
 
 echo " copying snappy folder to site-packages to make it importable: cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages"
 cp -r $SNAP_HOME/snap-python/snappy $PREFIX/lib/python${python_version}/site-packages &>> $PREFIX/.messages.txt
