@@ -23,3 +23,14 @@ RUN wget -qO- https://micromamba.snakepit.net/api/micromamba/linux-64/latest | t
     cp ./micromamba /usr/bin                                            && \
     micromamba create -f /tmp/dev.environment.yml                           && \
     micromamba create -f /tmp/environment.yml                      
+
+ARG NB_USER=vscode
+ARG NB_UID=1000
+ARG HOME=/home/vscode
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    --home ${HOME} \
+    --force-badname \
+    ${NB_USER}
